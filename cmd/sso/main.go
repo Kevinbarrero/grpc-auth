@@ -1,6 +1,7 @@
 package main
 
 import (
+	"grpc-auth/internal/app"
 	"grpc-auth/internal/config"
 	"log/slog"
 	"os"
@@ -17,9 +18,8 @@ func main() {
 
 	log := setupLogger(cfg.Env)
 	log.Info("starting application", slog.Any("config", cfg))
-	// TODO: init app
-
-	// TODO: run grpc server
+	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
+	application.GRPCSvr.MustRun()
 }
 
 func setupLogger(env string) *slog.Logger {
