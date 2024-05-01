@@ -57,7 +57,6 @@ func (s *Storage) User(ctx context.Context, email string) (models.User, error) {
 		return models.User{}, fmt.Errorf("%s: %w", op, err)
 	}
 	row := stmt.QueryRowContext(ctx, email)
-	fmt.Println("row", row)
 
 	var user models.User
 

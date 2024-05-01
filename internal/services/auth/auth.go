@@ -38,6 +38,7 @@ var (
 	ErrInvalidCredentials = errors.New("invalid credentials")
 	ErrInvalidAppID       = errors.New("invalid app id")
 	ErrUserExists         = errors.New("user already exists")
+	ErrUserNotFound       = errors.New("user not found")
 )
 
 // New returns a new instance of the Auth service.
@@ -88,7 +89,6 @@ func (a *Auth) Login(ctx context.Context, email string, password string, appID i
 	log.Info("attempting to login user")
 
 	user, err := a.usrProvider.User(ctx, email)
-	fmt.Println("user", user)
 	if err != nil {
 		if errors.Is(err, storage.ErrUserNotFound) {
 			a.log.Warn("user not found", err)
